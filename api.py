@@ -43,7 +43,7 @@ print(combined_data_session)
 
 # Process each session
 for session_key in session_keys:
-    session_url = base + methods[2] + variables[2] + session_key
+    session_url = base + methods[2] + variables[2] + str(session_key)
     response = urlopen(session_url)
     driver_data = json.loads(response.read().decode('utf-8'))
     broadcast_name = [item["broadcast_name"] for item in driver_data]
@@ -56,7 +56,7 @@ for session_key in session_keys:
     print(combined_data_driver)
 
     # Fetch position data for each session
-    position_url = base + methods[8] + variables[2] + session_key
+    position_url = base + methods[8] + variables[2] + str(session_key)
     response = urlopen(position_url)
     position_data = json.loads(response.read().decode('utf-8'))
     driver_number_position = [item["driver_number"] for item in position_data]
