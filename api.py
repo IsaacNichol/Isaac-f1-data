@@ -29,7 +29,7 @@ year = '2023'
 
 
 
-session_url = base + methods[0] + variables[0] + year
+session_url = base + methods[0] + variables[0] + year + "&session_key=9222"
 response = urlopen(session_url)
 session_data = json.loads(response.read().decode('utf-8'))
 session_keys = [item["session_key"] for item in session_data]
