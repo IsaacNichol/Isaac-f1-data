@@ -21,9 +21,11 @@ cur = conn.cursor()
 create_table_session = """
 CREATE TABLE IF NOT EXISTS sessions (
     id SERIAL PRIMARY KEY,
-    session_key int,
+    circuit_key int,
+    ciruit_name varchar(100),
     country VARCHAR(100),
-    session_type VARCHAR(100)
+    session_type VARCHAR(100),
+    session_key int,
 )
 """
 
@@ -34,6 +36,7 @@ CREATE TABLE IF NOT EXISTS drivers (
     driver_number int,
     session_key int,
     broadcast_name varchar(100),
+    name_acronym varchar(100),
     first_name varchar(100),
     last_name varchar(100),
     team_name varchar(100)
@@ -88,23 +91,20 @@ variables = [
 ]
 year = '2023'
 
-
-
 session_url = base + methods[0] + variables[0] + year + "&session_key=9222"
 response = urlopen(session_url)
 session_data = json.loads(response.read().decode('utf-8'))
 session_keys = [item["session_key"] for item in session_data]
 country_code = [item["country_code"] for item in session_data]
 session_type = [item["session_type"] for item in session_data]
-
-combined_data_session = list(zip(session_keys, country_code,session_type))
+circuit_name = [item["circuit_short_name"] for item in session_data]
+circuit_key = [item["circuit_key"] for item in session_data]
+combined_data_session = list(zip(session_keys, country_code,session_type,circuit_name,circuit_key))
 
 print(combined_data_session)
 
-# Iterate through each sessions for both driver data and position data
+# Process each session
 for session_key in session_keys:
-
-    # Fetch driver data for each session
     driver_url = base + methods[2] + variables[2] + str(session_key)
     response = urlopen(driver_url)
     driver_data = json.loads(response.read().decode('utf-8'))
@@ -112,10 +112,12 @@ for session_key in session_keys:
     driver_number = [item["driver_number"] for item in driver_data]
     session_key_driver = [item["session_key"] for item in driver_data]
     team_name = [item["team_name"] for item in driver_data]
+    first_name = [item["first_name"] for item in driver_data]
+    last_name = [item["last_name"] for item in driver_data]
+    name_acronym = [item["name_acronym"] for item in driver_data]
 
-    combined_data_driver = list(zip(broadcast_name, driver_number, session_key_driver, team_name))
+    combined_data_driver = list(zip(broadcast_name, driver_number, session_key_driver, team_name,first_name,last_name,name_acronym))
     print(combined_data_driver)
-
     # Fetch position data for each session
     position_url = base + methods[8] + variables[2] + str(session_key)
     response = urlopen(position_url)
@@ -130,7 +132,7 @@ for session_key in session_keys:
 
 #insert data into sessions table
 insert_query = """
-INSERT INTO sessions (session_key,country,session_type) VALUES (%s, %s, %s)
+INSERT INTO sessions (session_keys, country_code,session_type,circuit_name,circuit_key) VALUES (%s, %s, %s, %s, %s)
 """
 
 cur.executemany(insert_query,combined_data_session)
