@@ -22,7 +22,7 @@ create_table_session = """
 CREATE TABLE IF NOT EXISTS sessions (
     id SERIAL PRIMARY KEY,
     circuit_key int,
-    ciruit_name varchar(100),
+    circuit_name varchar(100),
     country VARCHAR(100),
     country_code varchar(100),
     session_type VARCHAR(100),
