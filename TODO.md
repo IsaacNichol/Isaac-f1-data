@@ -29,3 +29,6 @@ translations over now based on what i have learnt
 Currently my data shows where a car started and all positions changed but not a starting grid vs finshing result.
 Perhaps a results table might be the way to go - results and starting in the same or one or the other :thinking:. 
 As of right now i am leaning towards one table with a name of X that shows starting grid and end result
+
+**Exceptions**\
+How can i handle exceptions from the API.....
