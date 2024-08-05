@@ -1,14 +1,7 @@
 from urllib.request import urlopen
 import json
 import pandas as pd
-import psycopg2
-conn = psycopg2.connect(
-    dbname="postgres",
-    user="",
-    password="",
-    host="local.host",
-    port="5432"
-)
+
 
 base = 'https://api.openf1.org/v1/'
 methods = [
