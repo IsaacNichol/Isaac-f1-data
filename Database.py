@@ -1,7 +1,6 @@
 
 from urllib.request import urlopen
 import json
-import pandas as pd
 import psycopg2
 
 
@@ -17,8 +16,8 @@ conn = psycopg2.connect(
 # Create a cursor object
 cur = conn.cursor()
 
-# Create table if it doesn't exist
-create_table_query_session = """
+# Create table for session data
+create_table_session = """
 CREATE TABLE IF NOT EXISTS sessions (
     id SERIAL PRIMARY KEY,
     session_key VARCHAR(100),
@@ -26,12 +25,16 @@ CREATE TABLE IF NOT EXISTS sessions (
     session_type VARCHAR(100)
 )
 """
-create_table_query_drivers = """
+
+# Create table for drivers data
+create_table_drivers = """
 CREATE TABLE IF NOT EXISTS drivers (
     id SERIAL PRIMARY KEY,
 
 )
 """
+
+# Create table for postitions data
 create_table_positions = """
 CREATE TABLE IF NOT EXISTS postitions (
     id SERIAL PRIMARY KEY,
@@ -40,10 +43,22 @@ CREATE TABLE IF NOT EXISTS postitions (
     session_key int
 )
 """
-cur.execute(create_table_query)
+
+#execute create sessions table
+cur.execute(create_table_session)
 conn.commit()
 
+#execute create drivers table
+cur.execute(create_table_drivers)
+conn.commit()
+
+#execture create postitions table
+cur.execute(create_table_positions)
+conn.commit()
+
+#using the openf1 API's call data re ressions
 base = 'https://api.openf1.org/v1/'
+
 methods = [
     'sessions?',
     'car_data?',
@@ -82,6 +97,8 @@ combined_data = list(zip(session_keys, country_code,session_type))
 insert_query = """
 INSERT INTO sessions (session_key,country,session_type) VALUES (%s, %s, %s)
 """
+
+#insert session data into sessions table
 cur.executemany(insert_query,combined_data)
 conn.commit()
 
