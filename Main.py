@@ -94,18 +94,18 @@ year = '2023'
 session_url = base + methods[0] + variables[0] + year + "&session_key=9222"
 response = urlopen(session_url)
 session_data = json.loads(response.read().decode('utf-8'))
-session_keys = [item["session_key"] for item in session_data]
+session_key = [item["session_key"] for item in session_data]
 country_code = [item["country_code"] for item in session_data]
 session_type = [item["session_type"] for item in session_data]
 circuit_name = [item["circuit_short_name"] for item in session_data]
 circuit_key = [item["circuit_key"] for item in session_data]
-combined_data_session = list(zip(session_keys, country_code,session_type,circuit_name,circuit_key))
+combined_data_session = list(zip(session_key, country_code,session_type,circuit_name,circuit_key))
 
 print(combined_data_session)
 
 # Process each session
-for session_key in session_keys:
-    driver_url = base + methods[2] + variables[2] + str(session_key)
+for key in session_key:
+    driver_url = base + methods[2] + variables[2] + str(key)
     response = urlopen(driver_url)
     driver_data = json.loads(response.read().decode('utf-8'))
     broadcast_name = [item["broadcast_name"] for item in driver_data]
@@ -119,7 +119,7 @@ for session_key in session_keys:
     combined_data_driver = list(zip(broadcast_name, driver_number, session_key_driver, team_name,first_name,last_name,name_acronym))
     print(combined_data_driver)
     # Fetch position data for each session
-    position_url = base + methods[8] + variables[2] + str(session_key)
+    position_url = base + methods[8] + variables[2] + str(key)
     response = urlopen(position_url)
     position_data = json.loads(response.read().decode('utf-8'))
     driver_number_position = [item["driver_number"] for item in position_data]
@@ -132,7 +132,7 @@ for session_key in session_keys:
 
 #insert data into sessions table
 insert_query = """
-INSERT INTO sessions (session_keys, country_code,session_type,circuit_name,circuit_key) VALUES (%s, %s, %s, %s, %s)
+INSERT INTO sessions (session_key,country_code,session_type,circuit_name,circuit_key) VALUES (%s, %s, %s, %s, %s)
 """
 
 cur.executemany(insert_query,combined_data_session)
