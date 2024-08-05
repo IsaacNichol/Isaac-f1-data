@@ -26,11 +26,10 @@ variables = [
     'country_name='
 ]
 year = '2023'
-and_session = '&'+variables[2]+'9197'
-session = variables[2]+'9197'
 
 
-session_url = base + methods[0] + variables[0] + year + and_session
+
+session_url = base + methods[0] + variables[0] + year
 response = urlopen(session_url)
 session_data = json.loads(response.read().decode('utf-8'))
 session_keys = [item["session_key"] for item in session_data]
@@ -52,7 +51,6 @@ for session_key in session_keys:
     team_name = [item["team_name"] for item in driver_data]
 
     combined_data_driver = list(zip(broadcast_name, driver_number, session_key_driver, team_name))
-    print(f"Drivers for session {session_key}:")
     print(combined_data_driver)
 
     # Fetch position data for each session
@@ -65,5 +63,4 @@ for session_key in session_keys:
     date = [item["date"] for item in position_data]
 
     combined_data_position = list(zip(driver_number_position, session_key_position, position, date))
-    print(f"Positions for session {session_key}:")
     print(combined_data_position)
