@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     ciruit_name varchar(100),
     country VARCHAR(100),
     session_type VARCHAR(100),
-    session_key int,
+    session_key int
 )
 """
 
