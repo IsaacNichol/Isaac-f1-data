@@ -37,7 +37,6 @@ country_code = [item["country_code"] for item in session_data]
 session_type = [item["session_type"] for item in session_data]
 circuit_name = [item["circuit_short_name"] for item in session_data]
 circuit_key = [item["circuit_key"] for item in session_data]
-print(session_url)
 combined_data_session = list(zip(session_keys, country_code,session_type,circuit_name,circuit_key))
 
 print(combined_data_session)
