@@ -12,7 +12,8 @@ Thoughts are to have intermediate tables for these two usecases to reduce excess
 
 **Allowing of Duplicate**\
 Currently, an exact duplicate record is allowed to be entered - this should be
-disallowed as not great for keeping a clean set of data
+disallowed as not great for keeping a clean set of data.
+**After some thinking this makes sense to do after the above**
 
 **Inserting new columns**\
 When added a new column i have been dropping the existing table and creating a new.
