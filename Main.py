@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     circuit_key int,
     ciruit_name varchar(100),
     country VARCHAR(100),
+    country_code varchar(100),
     session_type VARCHAR(100),
     session_key int
 )
