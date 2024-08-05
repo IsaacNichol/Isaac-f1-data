@@ -9,3 +9,5 @@ From the OpenF1 api's
 https://openf1.org. Call a selection of data including sessions, drivers and positions then put those into a database ( Postgres ) for analysis.
 
 Creating 3 tables sessions, drivers and positions this should give me a good basis for doing some data analysis  
+
+See - [TODO](/TODO.md)
