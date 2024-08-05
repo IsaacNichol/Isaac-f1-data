@@ -69,7 +69,7 @@ base_url = 'https://api.openf1.org/v1/'
 api = API(base_url)
 
 year = '2023'
-session_data = api.get_sessions(year, session_key='9222')
+session_data = api.get_sessions(year)
 combined_data_session = api.process_session_data(session_data)
 
 print(combined_data_session)

@@ -24,3 +24,8 @@ This works during trial and error build but need a way to add a new column and m
 Need to spread this out into different files / functions to make changes simpler\
 This is done now but required some **heavy** hand holding from CHATGPT - i am going to attempt to move the database 
 translations over now based on what i have learnt 
+
+**Transforming of starting + finishing data**\
+Currently my data shows where a car started and all positions changed but not a starting grid vs finshing result.
+Perhaps a results table might be the way to go - results and starting in the same or one or the other :thinking:. 
+As of right now i am leaning towards one table with a name of X that shows starting grid and end result
