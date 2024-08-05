@@ -20,4 +20,6 @@ This works during trial and error build but need a way to add a new column and m
 
 **Spreading out of functions**\
 1 "main" file is not ideal for making changes to the API section of the program. 
-Need to spread this out into different files / functions to make changes simpler
+Need to spread this out into different files / functions to make changes simpler\
+This is done now but required some **heavy** hand holding from CHATGPT - i am going to attempt to move the database 
+translations over now based on what i have learnt 
