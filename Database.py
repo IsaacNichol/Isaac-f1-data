@@ -20,7 +20,7 @@ cur = conn.cursor()
 create_table_session = """
 CREATE TABLE IF NOT EXISTS sessions (
     id SERIAL PRIMARY KEY,
-    session_key VARCHAR(100),
+    session_key int,
     country VARCHAR(100),
     session_type VARCHAR(100)
 )
@@ -30,17 +30,21 @@ CREATE TABLE IF NOT EXISTS sessions (
 create_table_drivers = """
 CREATE TABLE IF NOT EXISTS drivers (
     id SERIAL PRIMARY KEY,
-
+    broadcast_name varchar(100),
+    driver_number int,
+    session_key int,
+    team_name varchar(100)
 )
 """
 
-# Create table for postitions data
+# Create table for positions data
 create_table_positions = """
 CREATE TABLE IF NOT EXISTS postitions (
     id SERIAL PRIMARY KEY,
     driver_number int,
+    session_key int,
     position int,
-    session_key int
+    date timestamp
 )
 """
 
@@ -83,23 +87,22 @@ variables = [
 year = '2023'
 
 # Fetching session data
-url = base + methods[0] + variables[0] + year
-response = urlopen(url)
-data = json.loads(response.read().decode('utf-8'))
-print(data)
-session_keys = [item["session_key"] for item in data]
-country_code = [item["country_code"] for item in data]
-session_type = [item["session_type"] for item in data]
+session_url = base + methods[0] + variables[0] + year
+response = urlopen(session_url)
+session_data = json.loads(response.read().decode('utf-8'))
+session_keys = [item["session_key"] for item in session_data]
+country_code = [item["country_code"] for item in session_data]
+session_type = [item["session_type"] for item in session_data]
 
-combined_data = list(zip(session_keys, country_code,session_type))
+combined_data_session = list(zip(session_keys, country_code,session_type))
 
 # Insert data
 insert_query = """
 INSERT INTO sessions (session_key,country,session_type) VALUES (%s, %s, %s)
 """
 
-#insert session data into sessions table
-cur.executemany(insert_query,combined_data)
+#insert data into sessions table
+cur.executemany(insert_query,combined_data_session)
 conn.commit()
 
 # Close the cursor and connection
