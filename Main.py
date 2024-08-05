@@ -2,6 +2,7 @@
 from urllib.request import urlopen
 import json
 import psycopg2
+import api
 
 
 # Connect to the PostgreSQL database
