@@ -44,10 +44,24 @@ response = urlopen(driver_url)
 driver_data = json.loads(response.read().decode('utf-8'))
 broadcast_name = [item["broadcast_name"] for item in driver_data]
 driver_number = [item["driver_number"] for item in driver_data]
-session_key = [item["session_key"] for item in driver_data]
+session_key_driver = [item["session_key"] for item in driver_data]
 team_name = [item["team_name"] for item in driver_data]
 
-combined_data_driver = list(zip(broadcast_name,driver_number,session_key,team_name))
+combined_data_driver = list(zip(broadcast_name,driver_number,session_key_driver,team_name))
 
 print(combined_data_driver)
 
+#Position data
+
+for key in session_keys:
+     position_url = base + methods[8] + variables[2] + str(key)
+response = urlopen(position_url)
+position_data = json.loads(response.read().decode('utf-8'))
+
+driver_number_position = [item["driver_number"] for item in position_data]
+session_key_position = [item["session_key"] for item in position_data]
+position = [item["position"] for item in position_data]
+date = [item["date"] for item in position_data]
+
+combined_data_position = list(zip(driver_number_position,session_key_position,position,date))
+print(combined_data_position)
