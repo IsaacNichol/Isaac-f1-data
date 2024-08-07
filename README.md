@@ -1,5 +1,5 @@
 # Isaac's fun with data
-I am trying to self some basic python and database interactions.
+I am trying to self some learn basic python and database interactions.
 Having an interest in F1 i figured that's a great place to start in learning with readily available data that is interesting to me.
 
 
