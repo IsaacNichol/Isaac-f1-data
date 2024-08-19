@@ -61,9 +61,9 @@ def race_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO:
         response = urlopen(session_url)
         session_data = json.loads(response.read().decode('utf-8'))
         circuit_name = [item["circuit_short_name"] for item in session_data]
+        comboBox.addItem("")
         for sessions in circuit_name:
             comboBox.addItem(sessions)
-
         layout.addWidget(comboBox)
         race_input(button, layout, circuit_name,comboBox)
     except Exception as e:
