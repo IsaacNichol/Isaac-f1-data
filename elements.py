@@ -51,19 +51,21 @@ def user_input_ui(layout):
     layout.addLayout(text_layout)
     # Set the "layout" as the window layout
 
+def error_parsing_url(layout,e):
+    layout.addWidget(QLabel(f"{e}"))
 
 def session_input(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
     year = line_edit.text()
-    session_url = "https://api.openf1.org/v1/sessions?year="+year+"&session_type=Race&session_name=Race"
-    response = urlopen(session_url)
-    session_data = json.loads(response.read().decode('utf-8'))
-    circuit_name = [item["circuit_short_name"] for item in session_data]
-#todo if empty list display error
-    for sessions in circuit_name:
-        layout.addWidget(QLabel(sessions))
-
-    race_input(button, layout, circuit_name)
-
+    try:
+        session_url = "https://api.openf1.org/v1/sessions?year="+year+"&session_type=Race&session_name=Race"
+        response = urlopen(session_url)
+        session_data = json.loads(response.read().decode('utf-8'))
+        circuit_name = [item["circuit_short_name"] for item in session_data]
+        for sessions in circuit_name:
+            layout.addWidget(QLabel(sessions))
+            race_input(button, layout, circuit_name)
+    except Exception as e:
+            error_parsing_url(layout,e)
 
 def race_input(button, layout,circuit_name):
     session = "Please input race"
