@@ -15,17 +15,17 @@ conn=psycopg2.connect(
     port="5432"
     )
 
-
 # Create a cursor to execute the SQL script
 cursor = conn.cursor()
 
 # Run .sql file to create database schema
-cursor.execute(sql_script)
-conn.commit()
+# This has been edited to split semicolon and iterate over the now split commands
+
+create_command = sql_script.split(';')
+for create in create_command:
+    cursor.execute(create)
 print("SQL script executed successfully.")
 
 # Close the cursor and connection
 cursor.close()
 conn.close()
-
-#syntax error on line 8. Need to find out how to create multiple tables
