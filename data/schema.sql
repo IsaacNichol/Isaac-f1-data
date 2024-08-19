@@ -5,7 +5,6 @@ CREATE TABLE "drivers" (
   "last_name" varchar,
   "name_acronym" varchar,
   "country_id" int,
-  PRIMARY KEY ("id")
 );
 
 CREATE TABLE "driver_metadata" (
