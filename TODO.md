@@ -27,6 +27,8 @@ Position data\
 Country data.\
 If this data already exists do not load data and instead display message to user
 
+Using PyQT5 for this - starting with a command to run the bootstrap operation 
+
 **Exceptions**\
 How can i handle exceptions from the API.....
 

@@ -11,3 +11,5 @@ https://openf1.org. Call a selection of data including sessions, drivers and pos
 Creating 3 tables sessions, drivers and positions this should give me a good basis for doing some data analysis  
 
 See [TODO](/TODO.md) for next things i am working on 
+
+I am using PyQT5 for a simple UI
