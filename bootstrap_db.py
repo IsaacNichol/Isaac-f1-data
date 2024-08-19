@@ -22,9 +22,11 @@ with open('./data/schema.sql', 'r') as file:
     # Run .sql file to create database schema
     create_commands = sql_script.split(';')
     for create in create_commands:
-        # Only execute non-empty commands
+        try:
             cursor.execute(create)
-            print("SQL command executed successfully.")
+            print("Database bootstrapped successfully.")
+        except Exception as e:
+            print(f"Database bootstrapped NOT successfully because {e}")
 
     # Commit the transaction to DB
     conn.commit()
