@@ -28,3 +28,4 @@ print("SQL script executed successfully.")
 cursor.close()
 conn.close()
 
+#syntax error on line 8. Need to find out how to create multiple tables
