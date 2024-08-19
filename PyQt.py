@@ -1,9 +1,18 @@
-from PyQt5.QtWidgets import QApplication, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QCheckBox
+import sys
 
-app = QApplication([])
+app = QApplication(sys.argv)
 
-label = QLabel('Testing')
+# Create the main window
+window = QWidget()
+window.setWindowTitle("F1 Data Downloader")
 
-label.show()
+# Create layout
+layout = QVBoxLayout()
 
-app.exec()
+# Create the window
+window.setLayout(layout)
+window.show()
+
+# Run the application
+sys.exit(app.exec_())
