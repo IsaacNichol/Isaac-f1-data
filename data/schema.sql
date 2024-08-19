@@ -48,4 +48,4 @@ ALTER TABLE "drivers" ADD FOREIGN KEY ("country_id") REFERENCES "country" ("id")
 
 ALTER TABLE "position" ADD FOREIGN KEY ("driver_id") REFERENCES "drivers" ("id");
 
-ALTER TABLE "position" ADD FOREIGN KEY ("session_id") REFERENCES "session" ("id");
+ALTER TABLE "position" ADD FOREIGN KEY ("session_id") REFERENCES "session" ("id")
