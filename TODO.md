@@ -11,7 +11,7 @@ UI was good as a learnings but the code needs to be cleaned
 **Allowing of Duplicate**\
 Currently, an exact duplicate record is allowed to be entered - this should be
 disallowed as not great for keeping a clean set of data.
-**After some thinking this makes sense to do after the above**
+- start by reading here https://www.squash.io/executing-query-to-remove-duplicate-rows-in-postgresql/#:~:text=Code%20Snippet%3A%20Preventing%20Duplicate%20Rows%20with%20Triggers,-Triggers%20are%20database&text=EXECUTE%20FUNCTION%20prevent_duplicates()%3B,Duplicate%20rows%20are%20not%20allowed.
 
 
 **Transforming of starting + finishing data**\
