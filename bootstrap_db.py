@@ -8,7 +8,7 @@ with open('./data/schema.sql', 'r') as file:
 
 # Connect to local DB
 conn=psycopg2.connect(
-    dbname="postgres",
+    dbname="f1",
     user="",
     password="",
     host="localhost",
