@@ -46,7 +46,7 @@ def bootstrap_box():
 
     submit_button = QPushButton('Submit')
 
-    text_layout.addWidget(line_edit)
+    text_layout.addWidget(line_edit) #TODO: Limit this field to only years
     text_layout.addWidget(submit_button)
 
     layout.addLayout(text_layout)
