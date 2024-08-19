@@ -30,7 +30,7 @@ CREATE TABLE "country" (
 
 CREATE TABLE "position" (
   "id" int PRIMARY KEY,
-  "date" datetime,
+  "date" timestamp with time zone,
   "driver_id" int,
   "position" int,
   "session_id" int,
