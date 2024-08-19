@@ -37,7 +37,7 @@ def user_input_ui(layout):
     # create text field
     line_edit = QLineEdit()
     # create submit button
-    submit_button = QPushButton('Submit')
+    submit_button = QPushButton('Submit') #TODO: Hitting this mutiple times shows multiple slectoin boxes. Ishould be removing the old and creating a new 
     # Call the Bootstrap button function, passing `yes_button` as an argument
     submit_button.clicked.connect(lambda: race_selector(submit_button, layout, line_edit))
     # Create text field to allow year entty

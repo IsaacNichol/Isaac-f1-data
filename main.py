@@ -3,12 +3,14 @@ import sys
 from elements import bootstrap_ui
 from elements import user_input_ui
 
+app_title = "F1 Data Downloader"
+
 # Initialise Qt
 app = QApplication(sys.argv)
 # Create the main window
 window = QWidget()
 # Set the window size
-window.setWindowTitle("F1 Data Downloader")
+window.setWindowTitle(app_title)
 # Create layout
 layout = QVBoxLayout()
 # set size of window

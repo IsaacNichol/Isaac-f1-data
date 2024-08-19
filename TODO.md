@@ -1,17 +1,12 @@
 # TODO
 
-**UI for requesting data**\
-Need a way to request data. This will be per session. This will then go and grab all of the other data points realted to that session.\
-Given a year API will then call all session and display this as a drop down.\
-Requesting a year will then grab Races and the user can select a race to download data of
 
-If this data already exists do not load data and instead display message to user
+**Connecting UI to backend function for making API calls**
 
-Using PyQT5 for this - starting with a command to run the bootstrap operation
-
-
-**cleaning of UI**\
+**Cleaning of UI code and TODO's**\
 UI was good as a learnings but the code needs to be cleaned
+
+
 
 **Allowing of Duplicate**\
 Currently, an exact duplicate record is allowed to be entered - this should be
@@ -47,3 +42,11 @@ Now that i have built out my schema this is no longer needed
 Need to spread this out into different files / functions to make changes simpler\
 This is done now but required some **heavy** hand holding from CHATGPT - i am going to attempt this again based on what i have learnt~~ 
 I am no longer worried about this - by removing the DB operations to their own file with some more wins on learnings as i smashes through the new strucutre i will end up with a < 100 line file which i find perfectly readable
+
+~~**UI for requesting data**~~ 
+
+~~Need a way to request data. This will be per session. This will then go and grab all of the other data points realted to that session.
+Given a year API will then call all session and display this as a drop down.
+Requesting a year will then grab Races and the user can select a race to download data of
+If this data already exists do not load data and instead display message to user
+Using PyQT5 for this - starting with a command to run the bootstrap operation~~
