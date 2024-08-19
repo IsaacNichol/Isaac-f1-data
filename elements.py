@@ -63,7 +63,7 @@ def session_input(button, layout, line_edit):  # todo: only allow 1 press #TODO:
         circuit_name = [item["circuit_short_name"] for item in session_data]
         for sessions in circuit_name:
             layout.addWidget(QLabel(sessions))
-            race_input(button, layout, circuit_name)
+        race_input(button, layout, circuit_name)
     except Exception as e:
             error_parsing_url(layout,e)
 
