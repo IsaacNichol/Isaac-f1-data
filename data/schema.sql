@@ -1,4 +1,4 @@
-CREATE TABLE "drivers" (
+CREATE TABLE IF NOT EXISTS "drivers" (
   "id" int PRIMARY KEY,
   "broadcast_name" varchar,
   "first_name" varchar,
@@ -7,13 +7,13 @@ CREATE TABLE "drivers" (
   "country_id" int
 );
 
-CREATE TABLE "driver_metadata" (
+CREATE TABLE IF NOT EXISTS "driver_metadata" (
   "driver_id" int,
   "driver_number" int,
   "team_name" varchar,
   "session_id" int
 );
-CREATE TABLE "session" (
+CREATE TABLE IF NOT EXISTS "session" (
   "id" int PRIMARY KEY,
   "country_id" int,
   "session_name" varchar,
@@ -23,12 +23,12 @@ CREATE TABLE "session" (
   "year" varchar
 );
 
-CREATE TABLE "country" (
+CREATE TABLE IF NOT EXISTS "country" (
   "id" int PRIMARY KEY,
   "country_code" varchar
 );
 
-CREATE TABLE "position" (
+CREATE TABLE IF NOT EXISTS "position" (
   "id" int PRIMARY KEY,
   "date" timestamp with time zone,
   "driver_id" int,
@@ -38,14 +38,14 @@ CREATE TABLE "position" (
   "finish_postion" boolean
 );
 
-ALTER TABLE "driver_metadata" ADD FOREIGN KEY ("driver_id") REFERENCES "drivers" ("id");
+ALTER TABLE "driver_metadata" ADD FOREIGN KEY IF NOT EXISTS ("driver_id") REFERENCES "drivers" ("id");
 
-ALTER TABLE "driver_metadata" ADD FOREIGN KEY ("session_id") REFERENCES "session" ("id");
+ALTER TABLE "driver_metadata" ADD FOREIGN KEY IF NOT EXISTS ("session_id") REFERENCES "session" ("id");
 
-ALTER TABLE "session" ADD FOREIGN KEY ("country_id") REFERENCES "country" ("id");
+ALTER TABLE "session" ADD FOREIGN KEY IF NOT EXISTS("country_id") REFERENCES "country" ("id");
 
-ALTER TABLE "drivers" ADD FOREIGN KEY ("country_id") REFERENCES "country" ("id");
+ALTER TABLE "drivers" ADD FOREIGN KEY IF NOT EXISTS ("country_id") REFERENCES "country" ("id");
 
-ALTER TABLE "position" ADD FOREIGN KEY ("driver_id") REFERENCES "drivers" ("id");
+ALTER TABLE "position" ADD FOREIGN KEY IF NOT EXISTS ("driver_id") REFERENCES "drivers" ("id");
 
 ALTER TABLE "position" ADD FOREIGN KEY ("session_id") REFERENCES "session" ("id")
