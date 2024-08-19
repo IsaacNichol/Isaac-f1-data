@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 )
 """
 
+
 # Create table for drivers data
 create_table_drivers = """
 CREATE TABLE IF NOT EXISTS drivers (
