@@ -38,14 +38,14 @@ CREATE TABLE IF NOT EXISTS "position" (
   "finish_postion" boolean
 );
 
-ALTER TABLE "driver_metadata" ADD FOREIGN KEY IF NOT EXISTS ("driver_id") REFERENCES "drivers" ("id");
+ALTER TABLE "driver_metadata" ADD FOREIGN KEY  ("driver_id") REFERENCES "drivers" ("id");
 
-ALTER TABLE "driver_metadata" ADD FOREIGN KEY IF NOT EXISTS ("session_id") REFERENCES "session" ("id");
+ALTER TABLE "driver_metadata" ADD FOREIGN KEY ("session_id") REFERENCES "session" ("id");
 
-ALTER TABLE "session" ADD FOREIGN KEY IF NOT EXISTS("country_id") REFERENCES "country" ("id");
+ALTER TABLE "session" ADD FOREIGN KEY ("country_id") REFERENCES "country" ("id");
 
-ALTER TABLE "drivers" ADD FOREIGN KEY IF NOT EXISTS ("country_id") REFERENCES "country" ("id");
+ALTER TABLE "drivers" ADD FOREIGN KEY ("country_id") REFERENCES "country" ("id");
 
-ALTER TABLE "position" ADD FOREIGN KEY IF NOT EXISTS ("driver_id") REFERENCES "drivers" ("id");
+ALTER TABLE "position" ADD FOREIGN KEY ("driver_id") REFERENCES "drivers" ("id");
 
 ALTER TABLE "position" ADD FOREIGN KEY ("session_id") REFERENCES "session" ("id")
