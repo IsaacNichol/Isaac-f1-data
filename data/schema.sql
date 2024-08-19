@@ -18,7 +18,7 @@ CREATE TABLE "session" (
   "country_id" int,
   "session_name" varchar,
   "circuit_name" varchar,
-  "start_time" datetime,
+  "start_time" timestamp with time zone,
   "gmt_offset" time,
   "year" varchar
 );
