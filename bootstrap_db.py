@@ -7,25 +7,28 @@ with open('./data/schema.sql', 'r') as file:
     sql_script = file.read()
 
 # Connect to local DB
-conn=psycopg2.connect(
-    dbname="f1",
-    user="",
-    password="",
-    host="localhost",
-    port="5432"
+
+    conn = psycopg2.connect(
+        dbname="f1",
+        user="",
+        password="",
+        host="localhost",
+        port="5432"
     )
 
-# Create a cursor to execute the SQL script
-cursor = conn.cursor()
+    # Create a cursor to execute the SQL script
+    cursor = conn.cursor()
 
-# Run .sql file to create database schema
-# This has been edited to split semicolon and iterate over the now split commands
+    # Run .sql file to create database schema
+    create_commands = sql_script.split(';')
+    for create in create_commands:
+        # Only execute non-empty commands
+            cursor.execute(create)
+            print("SQL command executed successfully.")
 
-create_command = sql_script.split(';')
-for create in create_command:
-    cursor.execute(create)
-print("SQL script executed successfully.")
+    # Commit the transaction to DB
+    conn.commit()
 
-# Close the cursor and connection
-cursor.close()
-conn.close()
+    # Close the cursor and connection
+    cursor.close()
+    conn.close()
