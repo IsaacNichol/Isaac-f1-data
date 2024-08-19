@@ -28,4 +28,3 @@ print("SQL script executed successfully.")
 cursor.close()
 conn.close()
 
-##LINE 11: CREATE TABLE "driver_metadata" ERROR

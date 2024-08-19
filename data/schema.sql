@@ -6,14 +6,14 @@ CREATE TABLE "drivers" (
   "name_acronym" varchar,
   "country_id" int,
   PRIMARY KEY ("id")
-)
+);
 
 CREATE TABLE "driver_metadata" (
   "driver_id" int,
   "driver_number" int,
   "team_name" varchar,
   "session_id" int
-)
+);
 CREATE TABLE "session" (
   "id" int PRIMARY KEY,
   "country_id" int,
