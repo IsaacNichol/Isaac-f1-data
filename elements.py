@@ -13,17 +13,13 @@ def bootstrap_ui(layout):
         "Bootstrap the database?",
         "This creates all the needed schema on a pre-existing PostgreSQL database."
     ]
-
     # Loop over text headers
     for header in text_header:
         layout.addWidget(QLabel(header))
-
     # Create "Yes" button
     yes_button = QPushButton('Yes')
-
     # Call the Bootstrap button function, passing `yes_button` as an argument
     yes_button.clicked.connect(lambda: button_bootstrap_db(yes_button))
-
     # Add the button to the layout
     layout.addWidget(yes_button)
 
@@ -69,29 +65,35 @@ def race_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO:
             comboBox.addItem(sessions)
 
         layout.addWidget(comboBox)
-        race_input(button, layout, circuit_name)
+        race_input(button, layout, circuit_name,comboBox)
     except Exception as e:
             error_parsing_url(layout,e)
 
 
-def race_input(button, layout,circuit_name):
-    session = "Please input race"
+def race_input(button, layout,circuit_name,comboBox):
 
-    layout.addWidget(QLabel(session))
+    current_selected = QLabel(comboBox.currentText())
+
+    def on_combobox_changed(index):
+        current_selected.setText(comboBox.currentText())
+        print(f"{comboBox.currentText()}")
+    # Connect the combo box selection change event to the function
+    comboBox.currentIndexChanged.connect(on_combobox_changed)
+
+    selection = "Race selected"
+    layout.addWidget(QLabel(selection))
+
     # create horiztonal layout
-    text_layout = QHBoxLayout()
-    # create text field
-    line_edit = QLineEdit()
-    # create submit button
-    submit_button = QPushButton('Submit')
+    selection_layout = QHBoxLayout()
 
-    # Create text field to allow year entty
-    text_layout.addWidget(line_edit)  # TODO: Limit this field to only races in list
+    selection_button = QPushButton('Confirm race request')
+    # create text field
+
+    selection_layout.addWidget(current_selected)
     # add submit button
-    text_layout.addWidget(submit_button)
+    selection_layout.addWidget(selection_button)
     # add horizontal layout
-    layout.addLayout(text_layout)
-    # Set the "layout" as the window layout
+    layout.addLayout(selection_layout)
 
     # Call the Bootstrap button function, passing `yes_button` as an argument
     #submit_button.clicked.connect() #TODO: Call API > DB Here
