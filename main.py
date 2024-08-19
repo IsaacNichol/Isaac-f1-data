@@ -1,11 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,QLineEdit,QHBoxLayout
-from PyQt5.QtCore import QTimer
 import sys
-from data import database
-
-def button_bootstrap_db(button):
-    database.bootstrap_database()  # Call the function to bootstrap the database
-    button.setText("Database Bootstrapped!") #TODO: add print out for when not applied
+from elements import button_bootstrap_db
+from elements import input
 
 def bootstrap_box():
     app = QApplication(sys.argv)
@@ -38,19 +34,25 @@ def bootstrap_box():
     layout.addWidget(yes_button)
 
     session = "Please input year"
+
     layout.addWidget(QLabel(session))
-
+    #create horiztonal layout
     text_layout = QHBoxLayout()
-
+    #create text field
     line_edit = QLineEdit()
-
+    #create submit button
     submit_button = QPushButton('Submit')
 
+    # Call the Bootstrap button function, passing `yes_button` as an argument
+    submit_button.clicked.connect(lambda: input(submit_button,layout,line_edit))
+    # Create text field to allow year entty
     text_layout.addWidget(line_edit) #TODO: Limit this field to only years
+    #add submit button
     text_layout.addWidget(submit_button)
-
+    # add horizontal layout
     layout.addLayout(text_layout)
     # Set the "layout" as the window layout
+
     window.setLayout(layout)
 
     # Show window to user
