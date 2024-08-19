@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,QLineEdit,QHBoxLayout
+from PyQt5.QtWidgets import QComboBox
 from data import database
 from urllib.request import urlopen
 import json
@@ -42,7 +43,7 @@ def user_input_ui(layout):
     # create submit button
     submit_button = QPushButton('Submit')
     # Call the Bootstrap button function, passing `yes_button` as an argument
-    submit_button.clicked.connect(lambda: session_input(submit_button, layout, line_edit))
+    submit_button.clicked.connect(lambda: race_selector(submit_button, layout, line_edit))
     # Create text field to allow year entty
     text_layout.addWidget(line_edit)  # TODO: Limit this field to only years
     # add submit button
@@ -51,10 +52,13 @@ def user_input_ui(layout):
     layout.addLayout(text_layout)
     # Set the "layout" as the window layout
 
+
 def error_parsing_url(layout,e):
     layout.addWidget(QLabel(f"{e}"))
 
-def session_input(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
+
+def race_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
+    comboBox = QComboBox()
     year = line_edit.text()
     try:
         session_url = "https://api.openf1.org/v1/sessions?year="+year+"&session_type=Race&session_name=Race"
@@ -62,10 +66,13 @@ def session_input(button, layout, line_edit):  # todo: only allow 1 press #TODO:
         session_data = json.loads(response.read().decode('utf-8'))
         circuit_name = [item["circuit_short_name"] for item in session_data]
         for sessions in circuit_name:
-            layout.addWidget(QLabel(sessions))
+            comboBox.addItem(sessions)
+
+        layout.addWidget(comboBox)
         race_input(button, layout, circuit_name)
     except Exception as e:
             error_parsing_url(layout,e)
+
 
 def race_input(button, layout,circuit_name):
     session = "Please input race"
