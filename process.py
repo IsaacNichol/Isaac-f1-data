@@ -2,5 +2,5 @@ from urllib.request import urlopen
 import json
 import api
 
-def requested(current_selected):
-    print(f'{current_selected} is requested')
+def requested(circuit_name,session_type):
+    print(f'{circuit_name}{session_type} is requested')

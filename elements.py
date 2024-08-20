@@ -94,7 +94,6 @@ def track_input(button, layout,circuit_name,track_comboBox,year):
     layout.addLayout(selection_layout)
 
     def on_selection(index):
-        requested(track_comboBox.currentText())
         selection_button.setHidden(True)
         selected_track = track_comboBox.currentText()
         session_selector(circuit_name,layout,button,year,selected_track)
@@ -116,12 +115,12 @@ def session_selector(circuit_name,layout,button,year,selected_track):  # todo: o
         for sessions in session_name:
             comboBox.addItem(sessions)
         layout.addWidget(comboBox)
-        session_input(button, layout, circuit_name,comboBox)
+        session_input(button, layout,selected_track,comboBox)
     except Exception as e:
             error_parsing_url(layout,e)
 
 
-def session_input(button, layout,circuit_name,comboBox):
+def session_input(button, layout,selected_track,comboBox):
 
     current_selected = QLabel(comboBox.currentText())
 
@@ -147,9 +146,9 @@ def session_input(button, layout,circuit_name,comboBox):
     layout.addLayout(selection_layout)
 
     def on_selection(index):
-        requested(comboBox.currentText())
+        session_type = comboBox.currentText()
+        requested(selected_track,session_type)
         selection_button.setHidden(True)
-        requested(circuit_name)
 
     selection_button.clicked.connect(on_selection)
 
