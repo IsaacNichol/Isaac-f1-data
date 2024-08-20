@@ -105,7 +105,6 @@ def session_selector(circuit_name,layout,button,year,selected_track):  # todo: o
     session = "Please select session"
     layout.addWidget(QLabel(session))
     comboBox = QComboBox()
-    print("https://api.openf1.org/v1/sessions?year="+year+"&circuit_short_name="+selected_track)
     try:
         session_url = "https://api.openf1.org/v1/sessions?year="+year+"&circuit_short_name="+selected_track
         response = urlopen(session_url)
