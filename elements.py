@@ -2,56 +2,50 @@ from PyQt5.QtWidgets import QPushButton, QLabel,QLineEdit,QHBoxLayout
 from PyQt5.QtWidgets import QComboBox
 from data import database
 from urllib.request import urlopen
-from process import requested
 import json
 
 
+## UI to bootstrap database
 def bootstrap_ui(layout):
     text_header = [
         "Bootstrap the database?",
         "This creates all the needed schema on a pre-existing PostgreSQL database."
     ]
-    # Loop over text headers
     for header in text_header:
         layout.addWidget(QLabel(header))
-    # Create "Yes" button
     yes_button = QPushButton('Yes')
-    # Call the Bootstrap button function, passing `yes_button` as an argument
     yes_button.clicked.connect(lambda: button_bootstrap_db(yes_button))
-    # Add the button to the layout
     layout.addWidget(yes_button)
 
 
+# Set text on button once clicked and call function to bootstrap DB
 def button_bootstrap_db(button):
-    database.bootstrap_database()  # Call the function to bootstrap the database
-    button.setText("Database Bootstrapped!")  # TODO: add print out for when not applied
+    database.bootstrap_database()
+    button.setText("Database Bootstrapped!")  # TODO: add error handling
 
 
-def user_input_ui(layout):
-    year = "Please input year"
-    layout.addWidget(QLabel(year))
-    # create horiztonal layout
-    text_layout = QHBoxLayout()
-    # create text field
-    line_edit = QLineEdit()
-    # create submit button
-    submit_button = QPushButton('Submit') #TODO: Hitting this mutiple times shows multiple slectoin boxes. Ishould be removing the old and creating a new
-    # Call the Bootstrap button function, passing `yes_button` as an argument
-    submit_button.clicked.connect(lambda: track_selector(submit_button, layout, line_edit))
-    # Create text field to allow year entty
-    text_layout.addWidget(line_edit)  # TODO: Limit this field to only years
-    # add submit button
-    text_layout.addWidget(submit_button)
-    # add horizontal layout
-    layout.addLayout(text_layout)
-    # Set the "layout" as the window layout
-
-
+#Handle server error with printout to user
 def error_parsing_url(layout,e):
     layout.addWidget(QLabel(f"{e}"))
 
 
-def track_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
+
+def user_input_ui(layout):
+
+    year = "Please input year"
+    layout.addWidget(QLabel(year))
+
+    text_layout = QHBoxLayout()
+    line_edit = QLineEdit()
+    submit_button = QPushButton('Submit') #TODO: Hitting this mutiple times shows multiple slectoin boxes. Ishould be removing the old and creating a new
+    submit_button.clicked.connect(lambda: track_selector(submit_button, layout, line_edit))
+    text_layout.addWidget(line_edit)  # TODO: Limit this field to only years
+    text_layout.addWidget(submit_button)
+
+    layout.addLayout(text_layout)
+
+
+def track_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028 #todo: handle when sessions have spaces in name
     track_comboBox = QComboBox()
     year = line_edit.text()
     try:
@@ -74,7 +68,6 @@ def track_input(button, layout,circuit_name,track_comboBox,year):
 
     def on_combobox_changed(index):
         current_selected.setText(track_comboBox.currentText())
-        #print(f'{comboBox.currentText()} is requested')
     # Connect the combo box selection change event to the function
     track_comboBox.currentIndexChanged.connect(on_combobox_changed)
 
@@ -125,30 +118,28 @@ def session_input(button, layout,selected_track,comboBox):
 
     def on_combobox_changed(index):
         current_selected.setText(comboBox.currentText())
-        #print(f'{comboBox.currentText()} is requested')
     # Connect the combo box selection change event to the function
     comboBox.currentIndexChanged.connect(on_combobox_changed)
 
     selection = "Race selected"
     layout.addWidget(QLabel(selection))
-
-    # create horiztonal layout
     selection_layout = QHBoxLayout()
-
     selection_button = QPushButton('Confirm race request')
-    # create text field
-
     selection_layout.addWidget(current_selected)
-    # add submit button
     selection_layout.addWidget(selection_button)
-    # add horizontal layout
     layout.addLayout(selection_layout)
 
     def on_selection(index):
         session_type = comboBox.currentText()
-        requested(selected_track,session_type)
+        requested(selected_track,session_type,layout)
         selection_button.setHidden(True)
 
     selection_button.clicked.connect(on_selection)
+
+
+def requested(circuit_name,session_type,layout):
+    request = f"Circuit requested {circuit_name} / Session requested {session_type}"
+    layout.addWidget(QLabel(request))
+
 
 
