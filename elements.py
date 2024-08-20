@@ -28,8 +28,8 @@ def button_bootstrap_db(button):
 
 
 def user_input_ui(layout):
-    session = "Please input year"
-    layout.addWidget(QLabel(session))
+    year = "Please input year"
+    layout.addWidget(QLabel(year))
     # create horiztonal layout
     text_layout = QHBoxLayout()
     # create text field
@@ -37,7 +37,7 @@ def user_input_ui(layout):
     # create submit button
     submit_button = QPushButton('Submit') #TODO: Hitting this mutiple times shows multiple slectoin boxes. Ishould be removing the old and creating a new
     # Call the Bootstrap button function, passing `yes_button` as an argument
-    submit_button.clicked.connect(lambda: race_selector(submit_button, layout, line_edit))
+    submit_button.clicked.connect(lambda: track_selector(submit_button, layout, line_edit))
     # Create text field to allow year entty
     text_layout.addWidget(line_edit)  # TODO: Limit this field to only years
     # add submit button
@@ -51,24 +51,77 @@ def error_parsing_url(layout,e):
     layout.addWidget(QLabel(f"{e}"))
 
 
-def race_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
-    comboBox = QComboBox()
+def track_selector(button, layout, line_edit):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
+    track_comboBox = QComboBox()
     year = line_edit.text()
     try:
         session_url = "https://api.openf1.org/v1/sessions?year="+year+"&session_type=Race&session_name=Race"
         response = urlopen(session_url)
         session_data = json.loads(response.read().decode('utf-8'))
         circuit_name = [item["circuit_short_name"] for item in session_data]
-        comboBox.addItem("")
+        track_comboBox.addItem("")
         for sessions in circuit_name:
-            comboBox.addItem(sessions)
-        layout.addWidget(comboBox)
-        race_input(button, layout, circuit_name,comboBox)
+            track_comboBox.addItem(sessions)
+        layout.addWidget(track_comboBox)
+        track_input(button, layout, circuit_name,track_comboBox,year)
     except Exception as e:
             error_parsing_url(layout,e)
 
 
-def race_input(button, layout,circuit_name,comboBox):
+def track_input(button, layout,circuit_name,track_comboBox,year):
+
+    current_selected = QLabel(track_comboBox.currentText())
+
+    def on_combobox_changed(index):
+        current_selected.setText(track_comboBox.currentText())
+        #print(f'{comboBox.currentText()} is requested')
+    # Connect the combo box selection change event to the function
+    track_comboBox.currentIndexChanged.connect(on_combobox_changed)
+
+    selection = "Race selected"
+    layout.addWidget(QLabel(selection))
+
+    # create horiztonal layout
+    selection_layout = QHBoxLayout()
+
+    selection_button = QPushButton('Confirm race request')
+    # create text field
+
+    selection_layout.addWidget(current_selected)
+    # add submit button
+    selection_layout.addWidget(selection_button)
+    # add horizontal layout
+    layout.addLayout(selection_layout)
+
+    def on_selection(index):
+        requested(track_comboBox.currentText())
+        selection_button.setHidden(True)
+        selected_track = track_comboBox.currentText()
+        session_selector(circuit_name,layout,button,year,selected_track)
+
+    selection_button.clicked.connect(on_selection)
+
+
+def session_selector(circuit_name,layout,button,year,selected_track):  # todo: only allow 1 press #TODO: add handeling when year return error EG 2028
+    session = "Please select session"
+    layout.addWidget(QLabel(session))
+    comboBox = QComboBox()
+    print("https://api.openf1.org/v1/sessions?year="+year+"&circuit_short_name="+selected_track)
+    try:
+        session_url = "https://api.openf1.org/v1/sessions?year="+year+"&circuit_short_name="+selected_track
+        response = urlopen(session_url)
+        session_data = json.loads(response.read().decode('utf-8'))
+        session_name = [item["session_name"] for item in session_data]
+        comboBox.addItem("")
+        for sessions in session_name:
+            comboBox.addItem(sessions)
+        layout.addWidget(comboBox)
+        session_input(button, layout, circuit_name,comboBox)
+    except Exception as e:
+            error_parsing_url(layout,e)
+
+
+def session_input(button, layout,circuit_name,comboBox):
 
     current_selected = QLabel(comboBox.currentText())
 
@@ -96,6 +149,7 @@ def race_input(button, layout,circuit_name,comboBox):
     def on_selection(index):
         requested(comboBox.currentText())
         selection_button.setHidden(True)
+        requested(circuit_name)
 
     selection_button.clicked.connect(on_selection)
 
