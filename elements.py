@@ -1,11 +1,9 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,QLineEdit,QHBoxLayout
+from PyQt5.QtWidgets import QPushButton, QLabel,QLineEdit,QHBoxLayout
 from PyQt5.QtWidgets import QComboBox
 from data import database
 from urllib.request import urlopen
+from process import requested
 import json
-import psycopg2
-import api
-import sys
 
 
 def bootstrap_ui(layout):
@@ -37,7 +35,7 @@ def user_input_ui(layout):
     # create text field
     line_edit = QLineEdit()
     # create submit button
-    submit_button = QPushButton('Submit') #TODO: Hitting this mutiple times shows multiple slectoin boxes. Ishould be removing the old and creating a new 
+    submit_button = QPushButton('Submit') #TODO: Hitting this mutiple times shows multiple slectoin boxes. Ishould be removing the old and creating a new
     # Call the Bootstrap button function, passing `yes_button` as an argument
     submit_button.clicked.connect(lambda: race_selector(submit_button, layout, line_edit))
     # Create text field to allow year entty
@@ -76,7 +74,7 @@ def race_input(button, layout,circuit_name,comboBox):
 
     def on_combobox_changed(index):
         current_selected.setText(comboBox.currentText())
-        print(f"{comboBox.currentText()}")
+        #print(f'{comboBox.currentText()} is requested')
     # Connect the combo box selection change event to the function
     comboBox.currentIndexChanged.connect(on_combobox_changed)
 
@@ -95,7 +93,10 @@ def race_input(button, layout,circuit_name,comboBox):
     # add horizontal layout
     layout.addLayout(selection_layout)
 
-    # Call the Bootstrap button function, passing `yes_button` as an argument
-    #submit_button.clicked.connect() #TODO: Call API > DB Here
+    def on_selection(index):
+        requested(comboBox.currentText())
+        selection_button.setHidden(True)
+
+    selection_button.clicked.connect(on_selection)
 
 
